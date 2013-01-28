@@ -1,0 +1,34 @@
+name: Run Worker
+id  : RunWorker
+key:  runworker
+config_settings:
+    WorkerScript:
+        default: mt-run-worker.cgi
+l10n_class: RunWorker::L10N
+tags:
+    function:
+        WorkerScript: sub { MT->config->WorkerScript }
+applications:
+    cms:
+        menus:
+            tools:start_worker:
+                label: Run Worker
+                order: 100
+                mode: start_worker
+                system_permission: administer
+                view: system
+        methods:
+            start_worker: >
+                sub {
+                    my $app = shift;
+                    my $component = MT->component( 'RunWorker' );
+                    my $tmpl = File::Spec->catfile( $component->path, 'tmpl', 'run-worker.tmpl' );
+                    my %param;
+                    $param{ done } = $app->param( 'done' );
+                    return $app->build_page( $tmpl, \%param );
+                }
+    runworker:
+        script: sub { MT->config->WorkerScript }
+        handler: MT::App::RunWorker
+        methods:
+            default: MT::App::RunWorker::_worker

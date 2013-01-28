@@ -1,0 +1,30 @@
+<__trans_section component="RunWorker">
+<mt:setvarblock name="page_title"><__trans phrase="Run Worker"></mt:setvarblock>
+<mt:setvarblock name="system_msg">
+    <mt:if name="done">
+    <mtapp:statusmsg
+        id="saved"
+        class="success">
+        <__trans phrase="Background Publishing Done">
+    </mtapp:statusmsg>
+    </mt:if>
+</mt:setvarblock>
+<mt:include name="include/header.tmpl">
+<form method="post" action="<MT:CGIPath><MT:WorkerScript>">
+<fieldset>
+    <input type="hidden" name="magic_token" value="<mt:var name="magic_token">" />
+    <button
+        onclick="
+        if ( window.confirm( '<__trans phrase="Are you sure you want to run worker?">' ) ) {
+            this.form.submit();
+        } else {
+            return false;
+        }
+        "
+        type="submit"
+        class="save action primary-button primary button"
+        ><__trans phrase="Done"></button>
+</fieldset>
+</form>
+<mt:include name="include/footer.tmpl">
+</__trans_section>
