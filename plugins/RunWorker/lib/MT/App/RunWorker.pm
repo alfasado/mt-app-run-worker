@@ -85,7 +85,7 @@ sub _worker {
         $schwartz;
     };
     if ( ( my $error = $@ ) && $verbose ) {
-        print STDERR "Error initializing TheSchwartz: $error\n";
+        return "Error initializing TheSchwartz: $error\n";
     }
     if ( $daemonize && $client ) {
         $client->work_periodically( $sleep );
